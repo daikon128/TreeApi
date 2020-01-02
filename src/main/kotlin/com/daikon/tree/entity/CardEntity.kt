@@ -19,5 +19,8 @@ data class CardEntity (
     val title: String = "",
 
     @Column(name="description", length=255, nullable=false)
-    val description: String = ""
+    val description: String = "",
+
+    @Column(name="del_flg", length=1)
+    val delFlg: Int = 0
 )

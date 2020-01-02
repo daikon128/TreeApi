@@ -98,4 +98,21 @@ class CardTest {
         val expectedCard = Card(1, children + setOf(addCard), "parent")
         assertEquals(expectedCard, parentCard)
     }
+
+    @Test
+    fun カード追加_子供() {
+        val children = setOf(
+                createTerminusCard(7, progress=0.0f, importance = 4)
+        )
+        val expectedChildren = setOf(
+                Card(7,setOf(
+                        createTerminusCard(8, progress=0.0f, importance = 4)
+                ), "terminus", 0.0f, importance = 4)
+        )
+        val addCard = createTerminusCard(8, progress=0.0f, importance = 4)
+        val parentCard = Card(1,children, "parent")
+        parentCard.addCard(7, addCard)
+        val expectedCard = Card(1,expectedChildren, "parent")
+        assertEquals(expectedCard, parentCard)
+    }
 }
