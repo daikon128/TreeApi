@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class CardTest {
-    fun createTerminusCard(id: Int, title: String = "terminus", progress: Float = 0.0f) : Card {
-        return Card(id, setOf(), title, progress)
+    fun createTerminusCard(id: Int, title: String = "terminus", progress: Float = 0.0f, importance: Int = 1) : Card {
+        return Card(id, setOf(), title, progress, importance)
     }
     fun createCardContainsChildren(nodeSize: Int, idOffset: Int = 0 , titlePrefix: String = "prefix", progress: Float = 0.0f) : Card {
         val parentId = idOffset + 1
@@ -41,5 +41,44 @@ class CardTest {
 
         val childCard = createTerminusCard(1, progress=100.0f)
         assertEquals(100.0f, childCard.progress)
+    }
+
+    @Test
+    fun バラバラなimportance100() {
+        val children = setOf(
+                createTerminusCard(2, progress = 100.0f, importance = 1),
+                createTerminusCard(3, progress = 100.0f, importance = 2),
+                createTerminusCard(4, progress = 100.0f, importance = 3),
+                createTerminusCard(5, progress = 100.0f, importance = 4)
+        )
+        val parentCard = Card(1, children, "parent")
+        assertEquals(100.0f, parentCard.progress)
+    }
+
+    @Test
+    fun バラバラなimportance30() {
+        val children = setOf(
+                createTerminusCard(2, progress=30.0f, importance = 1),
+                createTerminusCard(3, progress=30.0f, importance = 2),
+                createTerminusCard(4, progress=30.0f, importance = 3),
+                createTerminusCard(5, progress=30.0f, importance = 4)
+        )
+        val parentCard = Card(1,children, "parent")
+        assertEquals(30.0f, parentCard.progress)
+    }
+
+    @Test
+    fun バラバラなimportanceバラバラなprogress() {
+        val children = setOf(
+                createTerminusCard(2, progress=100.0f, importance = 1),
+                createTerminusCard(3, progress=0.0f, importance = 2),
+                createTerminusCard(4, progress=0.0f, importance = 2),
+                createTerminusCard(5, progress=0.0f, importance = 4),
+                createTerminusCard(6, progress=0.0f, importance = 4),
+                createTerminusCard(7, progress=0.0f, importance = 4),
+                createTerminusCard(8, progress=0.0f, importance = 4)
+        )
+        val parentCard = Card(1,children, "parent")
+        assertEquals(33.3f, parentCard.progress)
     }
 }
