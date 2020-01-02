@@ -39,7 +39,7 @@ class CardTest {
         val parentCard = createCardContainsChildren(10, progress=100)
         assertEquals(100, parentCard.progress)
 
-        val childCard = createTerminusCard(1, progress=30)
+        val childCard = createTerminusCard(1, progress=100)
         assertEquals(100, childCard.progress)
     }
 }
