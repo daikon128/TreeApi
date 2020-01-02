@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class CardTest {
-    fun createTerminusCard(id: Int, title: String = "terminus", progress: Int = 0) : Card {
+    fun createTerminusCard(id: Int, title: String = "terminus", progress: Float = 0.0f) : Card {
         return Card(id, setOf(), title, progress)
     }
-    fun createCardContainsChildren(nodeSize: Int, idOffset: Int = 0 , titlePrefix: String = "prefix", progress: Int = 0) : Card {
+    fun createCardContainsChildren(nodeSize: Int, idOffset: Int = 0 , titlePrefix: String = "prefix", progress: Float = 0.0f) : Card {
         val parentId = idOffset + 1
         val childrenIdStart = parentId + 1
         val nodeFinitSize = childrenIdStart + nodeSize
@@ -19,27 +19,27 @@ class CardTest {
     @Test
     fun プログレス計算０() {
         val parentCard = createCardContainsChildren(10)
-        assertEquals(0, parentCard.progress)
+        assertEquals(0.0f, parentCard.progress)
 
         val childCard = createTerminusCard(1)
-        assertEquals(0, childCard.progress)
+        assertEquals(0.0f, childCard.progress)
     }
 
     @Test
     fun プログレス計算３０() {
-        val parentCard = createCardContainsChildren(10, progress=30)
-        assertEquals(30, parentCard.progress)
+        val parentCard = createCardContainsChildren(10, progress=30.0f)
+        assertEquals(30.0f, parentCard.progress)
 
-        val childCard = createTerminusCard(1, progress=30)
-        assertEquals(30, childCard.progress)
+        val childCard = createTerminusCard(1, progress=30.0f)
+        assertEquals(30.0f, childCard.progress)
     }
 
     @Test
     fun プログレス計算100() {
-        val parentCard = createCardContainsChildren(10, progress=100)
-        assertEquals(100, parentCard.progress)
+        val parentCard = createCardContainsChildren(10, progress=100.0f)
+        assertEquals(100.0f, parentCard.progress)
 
-        val childCard = createTerminusCard(1, progress=100)
-        assertEquals(100, childCard.progress)
+        val childCard = createTerminusCard(1, progress=100.0f)
+        assertEquals(100.0f, childCard.progress)
     }
 }
