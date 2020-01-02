@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS card;
 CREATE TABLE IF NOT EXISTS card (
-    id bigint(20) NOT NULL,
+    id bigint(20) NOT NULL AUTO_INCREMENT,
     user_id bigint(20) NOT NULL,
     parent_id bigint(20) DEFAULT NULL,
     title varchar(255) NOT NULL,
