@@ -17,7 +17,7 @@ class CardTest {
         return Card(idOffset, children, titlePrefix + idOffset)
     }
     @Test
-    fun プログレス計算０() {
+    fun プログレス計算0() {
         val parentCard = createCardContainsChildren(10)
         assertEquals(0.0f, parentCard.progress)
 
@@ -26,7 +26,7 @@ class CardTest {
     }
 
     @Test
-    fun プログレス計算３０() {
+    fun プログレス計算30() {
         val parentCard = createCardContainsChildren(10, progress=30.0f)
         assertEquals(30.0f, parentCard.progress)
 
