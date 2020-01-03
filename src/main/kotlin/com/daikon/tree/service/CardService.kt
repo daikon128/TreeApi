@@ -9,7 +9,7 @@ class CardService(private val cardRepository: CardRepository) {
 
     fun findAll(): List<CardEntity> = cardRepository.findAll()
 
-    fun findByUserId(id: Long): List<CardEntity> = cardRepository.findByUserIdAndAndDelFlgIs(id)
+    fun findByUserId(id: Long): List<CardEntity> = cardRepository.findByUserIdAndDelFlgIs(id)
 
     fun findById(id: Long) = cardRepository.findById(id)
 

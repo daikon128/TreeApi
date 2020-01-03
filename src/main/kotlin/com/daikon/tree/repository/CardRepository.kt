@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CardRepository : JpaRepository<CardEntity, Long> {
-    fun findByUserIdAndAndDelFlgIs(userId: Long, delFlg: Int = 0) : List<CardEntity>
+    fun findByUserIdAndDelFlgIs(userId: Long, delFlg: Int = 0) : List<CardEntity>
 }
