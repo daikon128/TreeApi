@@ -1,7 +1,5 @@
 package com.daikon.tree.domain
 
-import java.lang.Math.round
-import java.util.stream.Collectors.toSet
 import kotlin.math.roundToInt
 
 // IDで等価性を判断。同名、同プログレスの場合が考えられる。
@@ -33,7 +31,6 @@ data class Card(val id: Int, var children: Set<Card>, val title: String, var own
                             .toSet())
     }
 
-
     fun copy(): Card {
         return Card(id, children.map { c -> c.copy() }.toSet(),title, ownProgressValue, importance)
     }
@@ -41,7 +38,7 @@ data class Card(val id: Int, var children: Set<Card>, val title: String, var own
 }
 
 class Tree(val id: Int, private val root: Card) {
-    fun addCard(parentId: Int, card: Card) {
-        root.addCard(parentId, card)
+    fun addCard(parentId: Int, card: Card) : Tree {
+        return Tree(this.id, root.addCard(parentId, card))
     }
 }

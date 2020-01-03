@@ -83,6 +83,7 @@ class CardTest {
         assertEquals(33.3f, parentCard.progress)
     }
 
+    @Test
     fun copy() {
         val children = setOf(
                 createTerminusCard(2, progress=100.0f, importance = 1),
