@@ -1,6 +1,7 @@
 package com.daikon.tree.domain
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 
 class CardTest {
@@ -93,7 +94,22 @@ class CardTest {
         val parentCard = Card(1,children, "parent")
         val otherParentCard = Card(1,childrenOther, "parent")
         assertEquals(true, parentCard == otherParentCard)
+    }
 
+    @Test
+    fun copy() {
+        val children = setOf(
+                createTerminusCard(2, progress=100.0f, importance = 1),
+                Card(7,setOf(
+                        createTerminusCard(8, progress=0.0f, importance = 4)
+                ), "terminus", 0.0f, importance = 4)
+        )
+        val parentCard = Card(1,children, "parent")
+        val otherParentCard = parentCard.copy()
+        assertEquals(otherParentCard, parentCard)
+        val newCard = createTerminusCard(3, progress=100.0f, importance = 1)
+        val addedParentCard = parentCard.addCard(8,newCard)
+        assertNotEquals(addedParentCard, otherParentCard)
     }
 
     @Test
@@ -108,9 +124,9 @@ class CardTest {
         )
         val addCard = createTerminusCard(8, progress=0.0f, importance = 4)
         val parentCard = Card(1,children, "parent")
-        parentCard.addCard(1, addCard)
+        val addedParentCard = parentCard.addCard(1, addCard)
         val expectedCard = Card(1, children + setOf(addCard), "parent")
-        assertEquals(expectedCard, parentCard)
+        assertEquals(expectedCard, addedParentCard)
     }
 
     @Test
@@ -125,8 +141,8 @@ class CardTest {
         )
         val addCard = createTerminusCard(8, progress=0.0f, importance = 4)
         val parentCard = Card(1,children, "parent")
-        parentCard.addCard(7, addCard)
+        val addedParentCard = parentCard.addCard(7, addCard)
         val expectedCard = Card(1,expectedChildren, "parent")
-        assertEquals(expectedCard, parentCard)
+        assertEquals(expectedCard, addedParentCard)
     }
 }
