@@ -83,6 +83,20 @@ class CardTest {
     }
 
     @Test
+    fun 同値でのイコール確認() {
+        val children = setOf(
+                createTerminusCard(2, progress=100.0f, importance = 1)
+        )
+        val childrenOther = setOf(
+                createTerminusCard(2, progress=100.0f, importance = 1)
+        )
+        val parentCard = Card(1,children, "parent")
+        val otherParentCard = Card(1,childrenOther, "parent")
+        assertEquals(true, parentCard == otherParentCard)
+
+    }
+
+    @Test
     fun カード追加() {
         val children = setOf(
                 createTerminusCard(2, progress=100.0f, importance = 1),

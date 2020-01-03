@@ -26,6 +26,15 @@ data class Card(val id: Int, var children: Set<Card>, val title: String, var own
         }
         children.forEach{ c -> c.addCard( parentId, card) }
     }
+
+    override fun equals(other: Any?): Boolean {
+        val otherCard = other as Card
+        return (this.id == otherCard.id
+                && this.importance == otherCard.importance
+                && this.ownProgressValue == otherCard.ownProgressValue
+                && this.title == otherCard.title
+                && this.children == otherCard.children)
+    }
 }
 
 class Tree(val id: Int, private val root: Card) {
