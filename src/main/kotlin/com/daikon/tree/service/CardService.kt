@@ -3,6 +3,8 @@ package com.daikon.tree.service
 import com.daikon.tree.entity.CardEntity
 import com.daikon.tree.http.AddCardRequest
 import com.daikon.tree.http.AddCardResponse
+import com.daikon.tree.http.UpdateCardRequest
+import com.daikon.tree.http.UpdateCardResponse
 import com.daikon.tree.repository.CardRepository
 import org.springframework.stereotype.Service
 
@@ -33,6 +35,12 @@ class CardService(private val cardRepository: CardRepository) {
         return true
     }
 
+    fun updateCard(card: UpdateCardRequest) : UpdateCardResponse {
+        val entity = updateCardRequestToCardEntity(card)
+        val result = save(entity)
+        return cardEntityToUpdateCardResponse(result)
+    }
+
 }
 
 fun addCardRequestToCardEntity(addCardRequest: AddCardRequest) : CardEntity {
@@ -53,6 +61,27 @@ fun addCardRequestToCardEntity(addCardRequest: AddCardRequest) : CardEntity {
 
 fun cardEntityToAddCardResponse (card: CardEntity) : AddCardResponse {
     return AddCardResponse(card.parentId,
+            card.title,
+            card.description,
+            card.progress,
+            card.importance)
+}
+
+fun updateCardRequestToCardEntity(updateCardRequest: UpdateCardRequest) : CardEntity {
+    return CardEntity(updateCardRequest.id,
+            updateCardRequest.userId,
+            updateCardRequest.parentId,
+            updateCardRequest.title,
+            updateCardRequest.description,
+            updateCardRequest.progress,
+            updateCardRequest.importance)
+}
+
+fun cardEntityToUpdateCardResponse (card: CardEntity) : UpdateCardResponse {
+    return UpdateCardResponse(
+            card.id!!,
+            card.userId,
+            card.parentId,
             card.title,
             card.description,
             card.progress,

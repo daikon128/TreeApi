@@ -23,3 +23,19 @@ Content-Type: application/json
 DELETE http://localhost:8080/tree/delete/3
 
 ###
+
+POST http://localhost:8080/tree/update
+Content-Type: application/json
+
+{
+  "id": 10,
+  "userId": 1,
+  "parentId": null,
+  "title": "testUpdateTitle",
+  "description": "testUpdateDescription",
+  "importance": 100,
+  "progress": 100.0
+}
+
+###
+

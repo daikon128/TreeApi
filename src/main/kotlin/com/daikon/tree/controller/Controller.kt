@@ -3,6 +3,8 @@ package com.daikon.tree.controller
 import com.daikon.tree.entity.CardEntity
 import com.daikon.tree.http.AddCardRequest
 import com.daikon.tree.http.AddCardResponse
+import com.daikon.tree.http.UpdateCardRequest
+import com.daikon.tree.http.UpdateCardResponse
 import com.daikon.tree.service.CardService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -31,6 +33,11 @@ class Controller {
     @DeleteMapping("/delete/{id}")
     fun deleteCard(@PathVariable id: Long) : Boolean {
         return cardService.deleteById(id)
+    }
+
+    @PostMapping("/update")
+    fun updateCard(@RequestBody updateCardRequest: UpdateCardRequest) : UpdateCardResponse {
+        return cardService.updateCard(updateCardRequest)
     }
 
 }
