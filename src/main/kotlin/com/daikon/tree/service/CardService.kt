@@ -1,5 +1,7 @@
 package com.daikon.tree.service
 
+import com.daikon.tree.domain.Card
+import com.daikon.tree.domain.Tree
 import com.daikon.tree.entity.CardEntity
 import com.daikon.tree.http.AddCardRequest
 import com.daikon.tree.http.AddCardResponse
@@ -17,6 +19,11 @@ class CardService(private val cardRepository: CardRepository) {
 
     fun findById(id: Long) = cardRepository.findById(id)
 
+    fun getTreesByUserId(id: Long) : Tree {
+        val entities = findByUserId(id)
+        return cardEntitiesToTree(entities)
+    }
+
     fun saveCard(card: AddCardRequest) : AddCardResponse {
         val cardEntity = addCardRequestToCardEntity(card)
         val saveResult = save(cardEntity)
@@ -24,8 +31,6 @@ class CardService(private val cardRepository: CardRepository) {
     }
 
     fun save(card: CardEntity) = cardRepository.save(card)
-
-    fun delete(id: Long) = cardRepository.deleteById(id)
 
     fun deleteById(id: Long) : Boolean {
         val result = findById(id)
@@ -41,6 +46,21 @@ class CardService(private val cardRepository: CardRepository) {
         return cardEntityToUpdateCardResponse(result)
     }
 
+}
+
+fun cardEntitiesToTree(entities: List<CardEntity>) : Tree {
+    val nodeEntities = findNodes(entities, null)
+    val nodeCards = nodeEntities
+            .filter { r-> r.id != null }
+            .map { r -> cardEntitieToChildressCard(r)}.toList()
+
+    return Tree(nodeCards.last().id, nodeCards.last())
+}
+
+fun findNodes(entities: List<CardEntity>, parentId: Long?) : List<CardEntity> =  entities.filter{ e-> e.parentId == parentId }.toList()
+
+fun cardEntitieToChildressCard(cardEntity: CardEntity) : Card {
+    return Card(cardEntity.id!!, cardEntity.parentId, setOf(), cardEntity.title, cardEntity.progress, cardEntity.importance)
 }
 
 fun addCardRequestToCardEntity(addCardRequest: AddCardRequest) : CardEntity {
