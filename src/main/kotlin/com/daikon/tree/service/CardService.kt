@@ -25,6 +25,14 @@ class CardService(private val cardRepository: CardRepository) {
 
     fun delete(id: Long) = cardRepository.deleteById(id)
 
+    fun deleteById(id: Long) : Boolean {
+        val result = findById(id)
+        val target = result.get()
+        val deleteCard = target.copy(delFlg = 1)
+        save(deleteCard)
+        return true
+    }
+
 }
 
 fun addCardRequestToCardEntity(addCardRequest: AddCardRequest) : CardEntity {

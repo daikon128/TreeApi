@@ -27,5 +27,11 @@ class Controller {
     fun addCard(@RequestBody addCardRequest: AddCardRequest) : AddCardResponse {
         return cardService.saveCard(addCardRequest)
     }
+
+    @DeleteMapping("/delete/{id}")
+    fun deleteCard(@PathVariable id: Long) : Boolean {
+        return cardService.deleteById(id)
+    }
+
 }
 
