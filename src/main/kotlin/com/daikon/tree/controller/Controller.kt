@@ -1,5 +1,6 @@
 package com.daikon.tree.controller
 
+import com.daikon.tree.domain.Tree
 import com.daikon.tree.entity.CardEntity
 import com.daikon.tree.http.AddCardRequest
 import com.daikon.tree.http.AddCardResponse
@@ -21,8 +22,8 @@ class Controller {
     }
 
     @GetMapping("/{id}")
-    fun showTreeById(@PathVariable id: Long) : List<CardEntity> {
-        return cardService.findByUserId(id)
+    fun showTreeByUserId(@PathVariable id: Long) : List<Tree> {
+        return cardService.getTreesByUserId(id)
     }
 
     @PostMapping("/add")

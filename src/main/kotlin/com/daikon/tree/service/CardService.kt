@@ -2,6 +2,7 @@ package com.daikon.tree.service
 
 import com.daikon.tree.domain.Card
 import com.daikon.tree.domain.Tree
+import com.daikon.tree.domain.constructTree
 import com.daikon.tree.entity.CardEntity
 import com.daikon.tree.http.AddCardRequest
 import com.daikon.tree.http.AddCardResponse
@@ -19,7 +20,7 @@ class CardService(private val cardRepository: CardRepository) {
 
     fun findById(id: Long) = cardRepository.findById(id)
 
-    fun getTreesByUserId(id: Long) : Tree {
+    fun getTreesByUserId(id: Long) : List<Tree> {
         val entities = findByUserId(id)
         return cardEntitiesToTree(entities)
     }
@@ -48,13 +49,14 @@ class CardService(private val cardRepository: CardRepository) {
 
 }
 
-fun cardEntitiesToTree(entities: List<CardEntity>) : Tree {
+fun cardEntitiesToTree(entities: List<CardEntity>) : List<Tree> {
     val nodeEntities = findNodes(entities, null)
     val nodeCards = nodeEntities
             .filter { r-> r.id != null }
             .map { r -> cardEntitieToChildressCard(r)}.toList()
-
-    return Tree(nodeCards.last().id, nodeCards.last())
+    val childCardEntities = entities.filter { c -> c.parentId != null }.toList()
+    val childCards = childCardEntities.map { c -> cardEntitieToChildressCard(c)}.toList()
+    return nodeCards.map{ c -> constructTree(c, childCards) }.map { c -> Tree(c.id, c) }
 }
 
 fun findNodes(entities: List<CardEntity>, parentId: Long?) : List<CardEntity> =  entities.filter{ e-> e.parentId == parentId }.toList()
