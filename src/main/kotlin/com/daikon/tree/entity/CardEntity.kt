@@ -21,6 +21,12 @@ data class CardEntity (
     @Column(name="description", length=255, nullable=false)
     val description: String = "",
 
+    @Column(name="progress")
+    val progress: Float = 0.0f,
+
+    @Column(name="importance")
+    val importance: Int = 1,
+
     @Column(name="del_flg", length=1)
     val delFlg: Int = 0
 )

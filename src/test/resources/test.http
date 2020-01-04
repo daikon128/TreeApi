@@ -5,3 +5,18 @@ http://localhost:8080/tree/1
 http://localhost:8080/tree
 
 ###
+
+POST http://localhost:8080/tree/add
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "parentId": null,
+  "title": "test",
+  "description": "testDescription",
+  "importance": 1,
+  "progress": 0.0
+}
+
+###
+
