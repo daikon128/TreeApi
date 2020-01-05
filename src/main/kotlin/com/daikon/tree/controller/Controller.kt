@@ -2,10 +2,7 @@ package com.daikon.tree.controller
 
 import com.daikon.tree.domain.Tree
 import com.daikon.tree.entity.CardEntity
-import com.daikon.tree.http.AddCardRequest
-import com.daikon.tree.http.AddCardResponse
-import com.daikon.tree.http.UpdateCardRequest
-import com.daikon.tree.http.UpdateCardResponse
+import com.daikon.tree.http.*
 import com.daikon.tree.service.CardService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -22,7 +19,7 @@ class Controller {
     }
 
     @GetMapping("/{id}")
-    fun showTreeByUserId(@PathVariable id: Long) : List<Tree> {
+    fun showTreeByUserId(@PathVariable id: Long) : ShowTreeByUserIdResponse {
         return cardService.getTreesByUserId(id)
     }
 

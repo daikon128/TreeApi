@@ -1,13 +1,13 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Tree></Tree>
-    <button v-on:click="getTree()"></button>
+  <div class="mainContainer">
+    <div id="app">
+      <tree v-for="tree in trees" v-bind:tree="tree" v-bind:key="tree.id"></tree>
+    </div>
   </div>
 </template>
 
 <script>
-import Tree from './components/Tree.vue'
+import Tree from './components/TreeComponent.vue'
 const axios = require('axios');
 
 export default {
@@ -15,21 +15,27 @@ export default {
   components: {
     Tree
   },
-  methods: {
-    getTree() {
-      let url = '/tree/1'
-      axios.get(url)
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                alert(error);
-              });
+  data() {
+      return {
+        trees: null
+      }
+  },
+  mounted() {
+    let url = '/tree/1'
+    axios.get(url)
+            .then(response => (
+              this.trees = response.data.trees
+            ))
+            .catch(function (error) {
+              alert(error);
+            });
 
-    }
   },
 }
 </script>
 
-<style>
+<style scoped>
+  .mainContainer {
+    margin: 30px;
+  }
 </style>

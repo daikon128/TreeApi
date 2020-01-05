@@ -4,10 +4,7 @@ import com.daikon.tree.domain.Card
 import com.daikon.tree.domain.Tree
 import com.daikon.tree.domain.constructTree
 import com.daikon.tree.entity.CardEntity
-import com.daikon.tree.http.AddCardRequest
-import com.daikon.tree.http.AddCardResponse
-import com.daikon.tree.http.UpdateCardRequest
-import com.daikon.tree.http.UpdateCardResponse
+import com.daikon.tree.http.*
 import com.daikon.tree.repository.CardRepository
 import org.springframework.stereotype.Service
 
@@ -20,9 +17,9 @@ class CardService(private val cardRepository: CardRepository) {
 
     fun findById(id: Long) = cardRepository.findById(id)
 
-    fun getTreesByUserId(id: Long) : List<Tree> {
+    fun getTreesByUserId(id: Long) : ShowTreeByUserIdResponse {
         val entities = findByUserId(id)
-        return cardEntitiesToTree(entities)
+        return ShowTreeByUserIdResponse(cardEntitiesToTree(entities))
     }
 
     fun saveCard(card: AddCardRequest) : AddCardResponse {
