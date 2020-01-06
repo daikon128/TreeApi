@@ -5,7 +5,7 @@ import kotlin.math.roundToInt
 // IDで等価性を判断。同名、同プログレスの場合が考えられる。
 // 別のTreeに持たせることもできるようにする。
 // => 一つのコンテンツが複数の目標に影響することもあるから。
-data class Card(val id: Long, val parentId: Long?, var children: Set<Card>, val title: String, var ownProgressValue: Float = 0.0f, val importance: Int = 1) {
+data class Card(val id: Long, val parentId: Long?, var children: Set<Card>, val title: String, val description: String, var ownProgressValue: Float = 0.0f, val importance: Int = 1) {
     var progress: Float
     get() {
         if (children.isEmpty()) {
@@ -37,7 +37,7 @@ data class Card(val id: Long, val parentId: Long?, var children: Set<Card>, val 
     }
 
     fun copy(): Card {
-        return Card(id, parentId, children.map { c -> c.copy() }.toSet(),title, ownProgressValue, importance)
+        return Card(id, parentId, children.map { c -> c.copy() }.toSet(),title, description, ownProgressValue, importance)
     }
 
 }

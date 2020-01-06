@@ -59,7 +59,7 @@ fun cardEntitiesToTree(entities: List<CardEntity>) : List<Tree> {
 fun findNodes(entities: List<CardEntity>, parentId: Long?) : List<CardEntity> =  entities.filter{ e-> e.parentId == parentId }.toList()
 
 fun cardEntitieToChildressCard(cardEntity: CardEntity) : Card {
-    return Card(cardEntity.id!!, cardEntity.parentId, setOf(), cardEntity.title, cardEntity.progress, cardEntity.importance)
+    return Card(cardEntity.id!!, cardEntity.parentId, setOf(), cardEntity.title, cardEntity.description, cardEntity.progress, cardEntity.importance)
 }
 
 fun addCardRequestToCardEntity(addCardRequest: AddCardRequest) : CardEntity {
@@ -79,7 +79,9 @@ fun addCardRequestToCardEntity(addCardRequest: AddCardRequest) : CardEntity {
 }
 
 fun cardEntityToAddCardResponse (card: CardEntity) : AddCardResponse {
-    return AddCardResponse(card.parentId,
+    return AddCardResponse(
+            card.id!!,
+            card.parentId,
             card.title,
             card.description,
             card.progress,

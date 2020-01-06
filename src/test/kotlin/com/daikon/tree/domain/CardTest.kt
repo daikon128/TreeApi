@@ -4,9 +4,14 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 
+fun CardWrapper(id: Long, parentId: Long?, children: Set<Card>, title: String, progress: Float = 0.0f, importance: Int = 1): Card {
+    val description = "description"
+    return Card(id, parentId, setOf(), title, description, progress, importance)
+}
+
 class CardTest {
     fun createTerminusCard(id: Long, parentId: Long? = 1, title: String = "terminus", progress: Float = 0.0f, importance: Int = 1) : Card {
-        return Card(id, parentId, setOf(), title, progress, importance)
+        return CardWrapper(id, parentId, setOf(), title, progress, importance)
     }
     fun createCardContainsChildren(nodeSize: Long, idOffset: Long = 0 , titlePrefix: String = "prefix", progress: Float = 0.0f) : Card {
         val parentId = idOffset + 1
@@ -15,7 +20,7 @@ class CardTest {
         val children = (childrenIdStart.. nodeFinitSize).map{ i ->
             createTerminusCard( i, parentId, titlePrefix + i, progress)
         }.toSet()
-        return Card(idOffset, null, children, titlePrefix + idOffset)
+        return CardWrapper(idOffset, null, children, titlePrefix + idOffset)
     }
     @Test
     fun プログレス計算0() {
@@ -52,7 +57,7 @@ class CardTest {
                 createTerminusCard(4, progress = 100.0f, importance = 3),
                 createTerminusCard(5, progress = 100.0f, importance = 4)
         )
-        val parentCard = Card(1, null, children, "parent")
+        val parentCard = CardWrapper(1, null, children, "parent")
         assertEquals(100.0f, parentCard.progress)
     }
 
@@ -64,7 +69,7 @@ class CardTest {
                 createTerminusCard(4, progress=30.0f, importance = 3),
                 createTerminusCard(5, progress=30.0f, importance = 4)
         )
-        val parentCard = Card(1,null, children, "parent")
+        val parentCard = CardWrapper(1,null, children, "parent")
         assertEquals(30.0f, parentCard.progress)
     }
 
@@ -79,7 +84,7 @@ class CardTest {
                 createTerminusCard(7, progress=0.0f, importance = 4),
                 createTerminusCard(8, progress=0.0f, importance = 4)
         )
-        val parentCard = Card(1, null, children, "parent")
+        val parentCard = CardWrapper(1, null, children, "parent")
         assertEquals(33.3f, parentCard.progress)
     }
 
@@ -87,13 +92,13 @@ class CardTest {
     fun copy() {
         val children = setOf(
                 createTerminusCard(2, progress=100.0f, importance = 1),
-                Card(7,
+                CardWrapper(7,
                         null,
                         setOf(
                         createTerminusCard(8, progress=0.0f, importance = 4)
                 ), "terminus", 0.0f, importance = 4)
         )
-        val parentCard = Card(1,null, children, "parent")
+        val parentCard = CardWrapper(1,null, children, "parent")
         val otherParentCard = parentCard.copy()
         assertEquals(otherParentCard, parentCard)
         val newCard = createTerminusCard(3, progress=100.0f, importance = 1)
@@ -112,9 +117,9 @@ class CardTest {
                 createTerminusCard(7, 1, progress=0.0f, importance = 4)
         )
         val addCard = createTerminusCard(8, progress=0.0f, importance = 4)
-        val parentCard = Card(1, null, children, "parent")
+        val parentCard = CardWrapper(1, null, children, "parent")
         val addedParentCard = parentCard.addCard(addCard)
-        val expectedCard = Card(1, null, children + setOf(addCard), "parent")
+        val expectedCard = CardWrapper(1, null, children + setOf(addCard), "parent")
         assertEquals(expectedCard, addedParentCard)
     }
 
@@ -124,18 +129,18 @@ class CardTest {
                 createTerminusCard(7, 1, progress=0.0f, importance = 4)
         )
         val expectedChildren = setOf(
-                Card(7,
+                CardWrapper(7,
                         1,
                         setOf(
                         createTerminusCard(8, 7, progress=0.0f, importance = 4)
                 ), "terminus", 0.0f, importance = 4)
         )
         val addCard = createTerminusCard(8, 7, progress=0.0f, importance = 4)
-        val parentCard = Card(1,
+        val parentCard = CardWrapper(1,
                 null,
                 children, "parent")
         val addedParentCard = parentCard.addCard(addCard)
-        val expectedCard = Card(1, null, expectedChildren, "parent")
+        val expectedCard = CardWrapper(1, null, expectedChildren, "parent")
         assertEquals(expectedCard, addedParentCard)
     }
 
@@ -146,9 +151,9 @@ class CardTest {
                 createTerminusCard(3, 2),
                 createTerminusCard(4, 1)
         )
-        val parentCard = Card(1, null, setOf(), "parent")
+        val parentCard = CardWrapper(1, null, setOf(), "parent")
 
-        val expectedCard = Card(
+        val expectedCard = CardWrapper(
                 1,
                 null,
                 setOf(

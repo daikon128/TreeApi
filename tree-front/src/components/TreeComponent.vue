@@ -1,5 +1,7 @@
 <template>
-    <node v-bind:node="tree.root"></node>
+    <div class="tree">
+        <node v-bind:node="tree.root"></node>
+    </div>
 </template>
 
 <script>
@@ -19,5 +21,10 @@
 </script>
 
 <style scoped>
+    .tree {
+        float:left;
+        min-width: 200px;
+        border: moccasin 2px dashed;
+    }
 
 </style>
