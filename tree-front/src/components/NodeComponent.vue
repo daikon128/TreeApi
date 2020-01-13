@@ -4,6 +4,7 @@
              v-on:mouseleave="hiddenAddButton"
             v-on:click="toggleMode"
         >{{ node.id }}:{{ node.title }}<div class="description">{{ node.description }}</div> <span v-show="buttonShown" >+</span></div>
+        <span v-on:click="removeChild">-</span>
         <ul>
             <li v-if="addCardMode" >
                 <input v-model="title" type="text" />
@@ -67,6 +68,19 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            removeChild() {
+                let url = `/tree/delete/${this.node.id}`
+                axios.delete(url)
+                    .then(() => (
+                        delete this.node
+                    ))
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
+
+
             }
         }
     }
