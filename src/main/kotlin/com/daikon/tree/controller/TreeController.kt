@@ -1,6 +1,5 @@
 package com.daikon.tree.controller
 
-import com.daikon.tree.domain.Tree
 import com.daikon.tree.entity.CardEntity
 import com.daikon.tree.http.*
 import com.daikon.tree.service.CardService
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/tree")
-class Controller {
+class TreeController {
     @Autowired
     private lateinit var cardService: CardService
 

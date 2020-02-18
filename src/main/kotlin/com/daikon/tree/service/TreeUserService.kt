@@ -10,5 +10,4 @@ class TreeUserService (private val treeUserRepository: TreeUserRepository){
         val treeUserEntity = treeUserRepository.findByEmailAndDelFlgIs(email)
         return TreeUser.of(treeUserEntity)
     }
-
 }

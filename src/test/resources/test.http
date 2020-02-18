@@ -38,4 +38,16 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:8888/login
 
+###
+POST http://localhost:8888/api/authenticate?username=user&password=password
+
+###
+GET http://localhost:8888/tree
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6InVzZXIiLCJleHAiOjE1ODI5MDkzMTUsInJvbCI6WyJST0xFX1VTRVIiXX0.RE4veDQJKMv-2wrX4Pf2U2k3u5BtYohz1ubDb-8PHHMIP24yCOcnlfu40PA7xYX8RT_SA-zjknJX74WDMGqJhg
+
+###
+GET http://localhost:8888/tree
+
+###
