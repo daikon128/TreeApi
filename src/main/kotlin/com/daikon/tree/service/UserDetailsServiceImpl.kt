@@ -16,7 +16,7 @@ class UserDetailsServiceImpl : UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
         var treeUser : TreeUser? = null
         try {
-            treeUser = treeUserService.findByEmail(username)
+            treeUser = treeUserService.findByUsername(username)
         } catch (e: Exception) {
             throw UsernameNotFoundException("user not found")
         }

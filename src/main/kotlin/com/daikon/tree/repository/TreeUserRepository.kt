@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TreeUserRepository: JpaRepository<TreeUserEntity, Long> {
-    fun findByEmailAndDelFlgIs(email: String, delFlg: Int = 0) : TreeUserEntity
+    fun findByUsernameAndDelFlgIs(username: String, delFlg: Int = 0) : TreeUserEntity
 }

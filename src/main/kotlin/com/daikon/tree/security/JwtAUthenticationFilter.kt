@@ -1,7 +1,8 @@
 package com.daikon.tree.security
 
 import com.daikon.tree.domain.TreeUser
-import com.daikon.tree.domain.TreeUserDetails
+import com.daikon.tree.entity.TreeUserEntity
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -25,9 +26,8 @@ class JwtAuthenticationFilter(private val authenticationManager: AuthenticationM
     }
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
-        val username = request.getParameter("username")
-        val password = request.getParameter("password")
-        val authenticationToken = UsernamePasswordAuthenticationToken(username, password)
+        val treeUser: TreeUserEntity = ObjectMapper().readValue(request.inputStream, TreeUserEntity::class.java)
+        val authenticationToken = UsernamePasswordAuthenticationToken(treeUser.username, treeUser.password)
         return authenticationManager.authenticate(authenticationToken)
     }
 

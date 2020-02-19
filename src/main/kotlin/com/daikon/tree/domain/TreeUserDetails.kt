@@ -3,7 +3,7 @@ package com.daikon.tree.domain
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.User
 
-class TreeUserDetails (treeUser: TreeUser): User( treeUser.userName, treeUser.password,
+class TreeUserDetails (treeUser: TreeUser): User( treeUser.username, treeUser.password,
         AuthorityUtils.createAuthorityList("ROLE_USER")) {
 
     private val treeUser: TreeUser = treeUser

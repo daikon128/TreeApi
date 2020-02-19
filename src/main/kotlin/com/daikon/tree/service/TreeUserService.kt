@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class TreeUserService (private val treeUserRepository: TreeUserRepository){
-    fun findByEmail(email: String) : TreeUser {
-        val treeUserEntity = treeUserRepository.findByEmailAndDelFlgIs(email)
+    fun findByUsername(username: String) : TreeUser {
+        val treeUserEntity = treeUserRepository.findByUsernameAndDelFlgIs(username)
         return TreeUser.of(treeUserEntity)
     }
 }
