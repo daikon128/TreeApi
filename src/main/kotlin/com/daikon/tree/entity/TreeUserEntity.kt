@@ -3,6 +3,7 @@ package com.daikon.tree.entity
 import javax.persistence.*
 
 @Entity
+@Table(name = "tree_user")
 data class TreeUserEntity(
         @Id
     @GeneratedValue

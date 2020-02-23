@@ -48,7 +48,8 @@ class JwtAuthenticationFilter(private val authenticationManager: AuthenticationM
                 .setExpiration(Date(System.currentTimeMillis() + 864000000))
                 .claim("rol", roles)
                 .compact()
-        response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token)
+        response.addHeader(SecurityConstants.TOKEN_HEADER, token)
+        response.addHeader("Access-Control-Expose-Headers", SecurityConstants.TOKEN_HEADER)
     }
 
     init {

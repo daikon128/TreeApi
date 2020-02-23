@@ -36,6 +36,7 @@ dependencies {
 	compile("io.jsonwebtoken:jjwt-api:0.10.5")
 	compile("io.jsonwebtoken:jjwt-impl:0.10.5")
 	compile("io.jsonwebtoken:jjwt-jackson:0.10.5")
+	compile("redis.clients:jedis")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("mysql:mysql-connector-java")

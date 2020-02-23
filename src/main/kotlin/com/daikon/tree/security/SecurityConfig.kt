@@ -19,7 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity
 open class SecurityConfig @Autowired
-constructor(private val userService: UserDetailsServiceImpl) : WebSecurityConfigurerAdapter() {
+constructor(private val userDetailService: UserDetailsServiceImpl) : WebSecurityConfigurerAdapter() {
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.cors().and()
@@ -36,21 +36,44 @@ constructor(private val userService: UserDetailsServiceImpl) : WebSecurityConfig
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.inMemoryAuthentication()
-                .withUser("user")
-                .password(passwordEncoder().encode("password"))
-                .authorities("ROLE_USER")
+        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
+
+//        auth.inMemoryAuthentication()
+//                .withUser("user")
+//                .password(passwordEncoder().encode("password"))
+//                .authorities("ROLE_USER")
     }
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
+        return BCryptPasswordEncoder(
+
+        )
     }
+
+//    @Bean
+//    fun corsConfigurationSource(): CorsConfigurationSource? {
+//        val source = UrlBasedCorsConfigurationSource()
+//        val corsConfiguration = CorsConfiguration()
+//        source.registerCorsConfiguration("/**", corsConfiguration)
+//        return source
+//    }
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource? {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = mutableListOf("*")
+        configuration.allowedMethods = mutableListOf("HEAD",
+                "GET", "POST", "PUT", "DELETE", "PATCH")
+        // setAllowCredentials(true) is important, otherwise:
+        // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
+        configuration.allowCredentials = true
+        // setAllowedHeaders is important! Without it, OPTIONS preflight request
+        // will fail with 403 Invalid CORS request
+//        configuration.allowedHeaders = mutableListOf("Authorization", "Cache-Control", "Content-Type")
+        configuration.allowedHeaders = mutableListOf("Authorization", "Cache-Control", "Content-Type")
         val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", CorsConfiguration().applyPermitDefaultValues())
+        source.registerCorsConfiguration("/**", configuration)
         return source
     }
 
