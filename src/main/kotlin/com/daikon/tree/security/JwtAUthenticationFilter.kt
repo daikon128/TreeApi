@@ -1,7 +1,9 @@
 package com.daikon.tree.security
 
-import com.daikon.tree.domain.TreeUser
+import com.daikon.tree.domain.TreeUserDetails
 import com.daikon.tree.entity.TreeUserEntity
+import com.daikon.tree.session.TreeSession
+import com.daikon.tree.session.TreeSessionKey
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -10,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.util.*
 import java.util.stream.Collectors
@@ -33,8 +34,8 @@ class JwtAuthenticationFilter(private val authenticationManager: AuthenticationM
 
     override fun successfulAuthentication(request: HttpServletRequest?, response: HttpServletResponse,
                                           filterChain: FilterChain?, authentication: Authentication) {
-        val user = authentication.getPrincipal() as User
-        val roles = user.getAuthorities()
+        val userDetail = authentication.getPrincipal() as TreeUserDetails
+        val roles = userDetail.getAuthorities()
                 .stream()
                 .map({ obj: GrantedAuthority -> obj.authority })
                 .collect(Collectors.toList())
@@ -44,10 +45,11 @@ class JwtAuthenticationFilter(private val authenticationManager: AuthenticationM
                 .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE)
                 .setIssuer(SecurityConstants.TOKEN_ISSUER)
                 .setAudience(SecurityConstants.TOKEN_AUDIENCE)
-                .setSubject(user.getUsername())
+                .setSubject(userDetail.username)
                 .setExpiration(Date(System.currentTimeMillis() + 864000000))
                 .claim("rol", roles)
                 .compact()
+        TreeSession.set(TreeSessionKey.SESSION_USER_KEY, userDetail.username);
         response.addHeader(SecurityConstants.TOKEN_HEADER, token)
         response.addHeader("Access-Control-Expose-Headers", SecurityConstants.TOKEN_HEADER)
     }

@@ -1,5 +1,7 @@
 package com.daikon.tree.security
 
+import com.daikon.tree.session.TreeSession
+import com.daikon.tree.session.TreeSessionKey
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.MalformedJwtException
@@ -48,6 +50,9 @@ class JwtAuthorizationFilter(authenticationManager: AuthenticationManager?) : Ba
                         .get("rol") as List<*>).stream()
                         .map { authority: Any? -> SimpleGrantedAuthority(authority as String?) }
                         .collect(Collectors.toList())
+                if (!TreeSession.exists(TreeSessionKey.SESSION_USER_KEY, username)) {
+                    throw SessionNotFoundException("session not found")
+                }
                 if (username != null && username.isNotEmpty()) {
                     return UsernamePasswordAuthenticationToken(username, null, authorities)
                 }
@@ -61,6 +66,8 @@ class JwtAuthorizationFilter(authenticationManager: AuthenticationManager?) : Ba
                 log.warn("Request to parse JWT with invalid signature : {} failed : {}", token, exception.message)
             } catch (exception: IllegalArgumentException) {
                 log.warn("Request to parse empty or null JWT : {} failed : {}", token, exception.message)
+            } catch (exception: SessionNotFoundException) {
+                log.warn("Session not found JWT : {} failed : {}", token, exception.message)
             }
         }
         return null
@@ -69,4 +76,6 @@ class JwtAuthorizationFilter(authenticationManager: AuthenticationManager?) : Ba
     companion object {
         private val log: Logger = LoggerFactory.getLogger(JwtAuthorizationFilter::class.java)
     }
+
+    class SessionNotFoundException(override val message: String = "") : Exception(message) {}
 }

@@ -1,5 +1,5 @@
 export function authHeader() {
-    // return authorization header with jwt token
+    // FIXME: localStorage依存の方法は辞めたい
     let user = JSON.parse(localStorage.getItem('user'));
 
     if (user) {

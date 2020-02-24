@@ -37,11 +37,6 @@ constructor(private val userDetailService: UserDetailsServiceImpl) : WebSecurity
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
-
-//        auth.inMemoryAuthentication()
-//                .withUser("user")
-//                .password(passwordEncoder().encode("password"))
-//                .authorities("ROLE_USER")
     }
 
     @Bean

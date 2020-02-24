@@ -5,13 +5,15 @@ import javax.persistence.*
 @Entity
 @Table(name = "tree_user")
 data class TreeUserEntity(
-        @Id
+    @Id
     @GeneratedValue
     val id: Long? = 0,
-        @Column(nullable=false, unique=true)
+
+    @Column(nullable=false, unique=true)
     val username: String = "",
-        @Column(nullable=false)
+
+    @Column(nullable=false)
     val password: String = "",
-        @Column(nullable=false)
+    @Column(nullable=false)
     val delFlg: Int = 0
 )
