@@ -17,14 +17,14 @@ function login(username, password) {
     // return fetch(`${config.apiUrl}/api/authenticate/`, request)
     return fetch(`http://localhost:8888/api/authenticate`, request)
         .then(handleResponse)
-        .then(token =>{
+        .then(user => {
             console.log("fetch login")
-            if (token) {
-                localStorage.setItem('user', JSON.stringify(token))
+            if (user) {
+                localStorage.setItem('user', JSON.stringify(user))
                 console.log("login")
             }
 
-            return token
+            return user
         })
 }
 
@@ -55,6 +55,7 @@ const mutations = {
         state.user = user
     },
     loginSuccess(state, user) {
+        console.log(user)
         state.status = { loggingIn: true}
         state.user = user
     },
@@ -77,7 +78,7 @@ function handleResponse(response) {
         if (auth == undefined || auth == "") {
             return Promise.reject("auth failure")
         }
-        return auth
+        return JSON.parse(text)
     })
 }
 

@@ -6,11 +6,9 @@
     </div>
 </template>
 <script>
-import Tree from '@/components/TreeComponent.vue'
+import Tree from '@/components/TreeComponent'
 import {authHeader} from "../security/auth-header";
 import {treeFetch} from "../_helper/request";
-
-// const axios = require('axios');
 
 export default {
     name: "Trees",
@@ -27,7 +25,7 @@ export default {
             method: 'GET',
             headers: authHeader()
         };
-        fetch(`http://localhost:8888/tree/1`, requestOptions).then(response => (
+        fetch(`http://localhost:8888/tree/${this.$store.state.account.user.id}`, requestOptions).then(response => (
             response.text().then(text => {
                 return text && JSON.parse(text)
             }).then(data => this.trees = data.trees)

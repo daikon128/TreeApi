@@ -52,6 +52,9 @@ class JwtAuthenticationFilter(private val authenticationManager: AuthenticationM
         TreeSession.set(TreeSessionKey.SESSION_USER_KEY, userDetail.username);
         response.addHeader(SecurityConstants.TOKEN_HEADER, token)
         response.addHeader("Access-Control-Expose-Headers", SecurityConstants.TOKEN_HEADER)
+        val userMap = mapOf("id" to userDetail.id, "username" to userDetail.username, "token" to token)
+        val mapper = ObjectMapper()
+        response.writer.print(mapper.writeValueAsString(userMap))
     }
 
     init {
