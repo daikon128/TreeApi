@@ -25,7 +25,8 @@
     </div>
 </template>
 <script>
-    const axios = require('axios');
+    import {treeFetch} from "../_helper/request";
+
     export default {
         name: "node",
         data() {
@@ -55,7 +56,7 @@
             addChildCard() {
                 let url = '/tree/add'
                 let params = {
-                    "userId": 1,
+                    "userId": this.$store.state.account.user.id,
                     "parentId": this.node.id,
                     "title": this.title,
                     "description": this.description,
@@ -63,7 +64,7 @@
                     "progress": 0.0
                 }
                 console.log(params)
-                axios.post(url, params)
+                treeFetch(url, {body: JSON.stringify(params)})
                     .then(response => (
                         // this.node.children.length > 0 ? this.node.children.add(response.data) : this.node.children  = [response.data]
                         this.node.children.push(response.data)

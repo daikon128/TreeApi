@@ -24,12 +24,29 @@ DELETE http://localhost:8080/tree/delete/3
 
 ###
 
-POST http://localhost:8080/tree/update
+POST http://localhost:8888/tree/add
 Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6ImZvbyIsImV4cCI6MTU4Mzg1NjYwMCwicm9sIjpbIlJPTEVfVVNFUiJdfQ.qwMCjzxST6N6dBHK9X_lgRv1Fesz1dP8yk0q1yXnbAw3CMxoxLmz2QQpdyoyZvSjPDHrZqN4QdhEKz8Q5N6evw
 
 {
-  "id": 10,
-  "userId": 1,
+  "id": 33,
+  "userId": 2,
+  "parentId": 3,
+  "title": "testUpdateTitle",
+  "description": "testUpdateDescription",
+  "importance": 100,
+  "progress": 100.0
+}
+
+###
+
+POST http://localhost:8888/tree/update
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6ImZvbyIsImV4cCI6MTU4Mzg1NjYwMCwicm9sIjpbIlJPTEVfVVNFUiJdfQ.qwMCjzxST6N6dBHK9X_lgRv1Fesz1dP8yk0q1yXnbAw3CMxoxLmz2QQpdyoyZvSjPDHrZqN4QdhEKz8Q5N6evw
+
+{
+  "id": 22,
+  "userId": 2,
   "parentId": 3,
   "title": "testUpdateTitle",
   "description": "testUpdateDescription",
