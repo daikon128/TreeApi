@@ -65,13 +65,13 @@
                 }
                 console.log(params)
                 treeFetch(url, {body: JSON.stringify(params)})
-                    .then(response => (
-                        // this.node.children.length > 0 ? this.node.children.add(response.data) : this.node.children  = [response.data]
-                        this.node.children.push(response.data)
-            ))
+                    .then(response =>
+                        (response.text()
+                            .then(text => (text && JSON.parse(text)))
+                            .then(data => this.node.children.push(data))))
                     .catch(function (error) {
                         console.log(error);
-                    });
+                    })
             },
             removeChildNode() {
                 delete this.node

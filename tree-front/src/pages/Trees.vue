@@ -25,8 +25,8 @@ export default {
             method: 'GET',
             headers: authHeader()
         };
-        fetch(`http://localhost:8888/tree/${this.$store.state.account.user.id}`, requestOptions).then(response => (
-            response.text().then(text => {
+        fetch(`http://localhost:8888/tree/${this.$store.state.account.user.id}`, requestOptions)
+            .then(response => (response.text().then(text => {
                 return text && JSON.parse(text)
             }).then(data => this.trees = data.trees)
         ))
