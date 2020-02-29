@@ -1,13 +1,14 @@
 <template>
     <div class="mainContainer">
     <span>
-      <tree v-for="tree in trees" v-bind:tree="tree" v-bind:key="tree.id"></tree>
+      <tree v-for="tree in trees" v-bind:tree="tree" v-bind:key="tree.id" @removeChildNode="removeChildNode"></tree>
     </span>
     </div>
 </template>
 <script>
 import Tree from '@/components/TreeComponent.vue'
 import {authHeader} from "../security/auth-header";
+import {treeFetch} from "../_helper/request";
 
 // const axios = require('axios');
 
@@ -43,6 +44,22 @@ export default {
         //     });
 
     },
+    methods: {
+        removeChildNode(nodeId) {
+            let url = `/tree/delete/${nodeId}`
+            let option = {method: 'DELETE'}
+            treeFetch(url, option)
+                .then(() =>
+
+                    (
+                        console.log("success")
+                    ))
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+
 }
 </script>
 

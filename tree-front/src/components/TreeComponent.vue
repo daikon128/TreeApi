@@ -1,11 +1,15 @@
 <template>
     <div class="tree">
-        <node v-bind:node="tree.root"></node>
+        <node
+                v-bind:node="tree.root"
+                @removeChildNodeEmit="removeChildNode"
+        ></node>
     </div>
 </template>
 
 <script>
     import Node from './NodeComponent.vue'
+    import {treeFetch} from "../_helper/request";
     export default {
         name: "Tree",
         components: {
@@ -17,6 +21,12 @@
               required: true
           }
         },
+        methods: {
+            removeChildNode(nodeId) {
+                this.$emit("removeChildNode", nodeId)
+            }
+
+        }
     }
 </script>
 
