@@ -74,10 +74,12 @@
                     })
             },
             removeChildNode() {
-                delete this.node
                 this.$emit("removeChildNodeEmit", this.node.id)
             },
             removeChildNodeEmit(nodeId) {
+                // FIX ME : 一つ上の親だけが実行するように...
+                this.node.children = this.node.children.filter((ele) => ele.id !== nodeId)
+                this.$forceUpdate()
                 this.$emit("removeChildNodeEmit", nodeId)
             }
         }
