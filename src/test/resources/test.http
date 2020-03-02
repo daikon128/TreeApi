@@ -77,3 +77,14 @@ Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZW
 GET http://localhost:8888/tree
 
 ###
+POST http://localhost:8888/registration
+Content-Type: application/json
+
+{
+  "username": "bar",
+  "password": "bar"
+}
+
+###
+
+

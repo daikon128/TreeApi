@@ -1,5 +1,6 @@
 package com.daikon.tree.security
 
+import com.daikon.tree.security.crypto.encoder
 import com.daikon.tree.service.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -25,7 +26,7 @@ constructor(private val userDetailService: UserDetailsServiceImpl) : WebSecurity
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JwtAuthenticationFilter(authenticationManager()))
@@ -41,9 +42,7 @@ constructor(private val userDetailService: UserDetailsServiceImpl) : WebSecurity
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder(
-
-        )
+        return encoder()
     }
 
 //    @Bean

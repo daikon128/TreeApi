@@ -44,6 +44,7 @@ export default {
     },
     methods: {
         removeChildNode(nodeId) {
+            console.log("remove child from tree.vue")
             let url = `/tree/delete/${nodeId}`
             let option = {method: 'DELETE'}
             treeFetch(url, option)

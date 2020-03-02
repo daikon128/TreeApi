@@ -16,4 +16,10 @@ data class TreeUserEntity(
     val password: String = "",
     @Column(nullable=false)
     val delFlg: Int = 0
-)
+) {
+    companion object {
+        fun new(username: String, password: String) : TreeUserEntity {
+            return TreeUserEntity(0, username, password, 0)
+        }
+    }
+}

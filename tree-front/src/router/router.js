@@ -3,12 +3,14 @@ import Router from 'vue-router';
 
 import Login from '@/pages/Login'
 import Trees from '@/pages/Trees'
+import Registration from "@/pages/Registration";
 
 Vue.use(Router);
 
 export const router = new Router({
     routes: [
         { path: '/', component: Login },
+        { path: '/registration', component: Registration },
         { path: '/trees', component: Trees },
 
         // otherwise redirect to home

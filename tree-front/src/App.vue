@@ -4,6 +4,7 @@
       <ul>
         <li><router-link class="router-link" to="/">top</router-link></li>
         <li><router-link class="router-link" to="/login">login</router-link></li>
+        <li><router-link class="router-link" to="/registration">registration</router-link></li>
         <li><router-link class="router-link" to="/trees">trees</router-link></li>
       </ul>
     </div>
