@@ -3,13 +3,13 @@
         <node
                 v-bind:node="tree.root"
                 @removeChildNodeEmit="removeChildNode"
+                @addChildEmit="addChildNode"
         ></node>
     </div>
 </template>
 
 <script>
     import Node from './NodeComponent.vue'
-    import {treeFetch} from "../_helper/request";
     export default {
         name: "Tree",
         components: {
@@ -22,7 +22,11 @@
           }
         },
         methods: {
+            addChildNode([params, callback]) {
+                this.$emit("addChildNode", [params, callback])
+            },
             removeChildNode(nodeId) {
+                this.tree.root.children = this.tree.root.children.filter((ele) => ele.id !== nodeId)
                 this.$emit("removeChildNode", nodeId)
             }
 

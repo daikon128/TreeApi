@@ -30,6 +30,7 @@ function login(username, password) {
 
 const actions = {
     login({ dispatch, commit}, { username, password }){
+        console.log("login start")
         commit('loginRequest', { username })
         login(username, password)
             .then(

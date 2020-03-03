@@ -1,18 +1,34 @@
 <template>
     <div>
         <h2>Registration</h2>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" v-model="username" name="username" class="form-control" :class="{ 'is-invalid': submitted && !username }" />
-                <div v-show="submitted && !username" class="invalid-feedback">Username is required</div>
-            </div>
-            <div class="form-group">
-                <label htmlFor="password">Password</label>
-                <input type="password" v-model="password" name="password" class="form-control" :class="{ 'is-invalid': submitted && !password }" />
-                <div v-show="submitted && !password" class="invalid-feedback">Password is required</div>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary" @click="send()">Registration</button>
+        <div>
+            <label for="username">Username</label>
+            <validation-provider rules="required" v-slot="{ errors }">
+                <input type="text"
+                       v-model="username"
+                       name="username"
+                       id="username"
+                       :class="{ 'is-invalid': submitted && !username }" />
+                <div class="form-control-feedback">
+                    <p class="alert alert-danger">{{ errors[0] }}</p>
+                </div>
+            </validation-provider>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <validation-provider rules="required" v-slot="{ errors }">
+                <input type="password"
+                       v-model="password"
+                       name="password"
+                       id="password"
+                       :class="{ 'is-invalid': submitted && !password }" />
+                <div class="form-control-feedback">
+                    <p class="alert alert-danger">{{ errors[0] }}</p>
+                </div>
+            </validation-provider>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" @click="send()">Registration</button>
             </div>
     </div>
 </template>

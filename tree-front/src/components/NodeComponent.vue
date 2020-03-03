@@ -19,14 +19,13 @@
                 <node
                         v-bind:node="child"
                         @removeChildNodeEmit="removeChildNodeEmit"
+                        @addChildEmit="addChildEmit"
                 ></node>
             </li>
         </ul>
     </div>
 </template>
 <script>
-    import {treeFetch} from "../_helper/request";
-
     export default {
         name: "node",
         data() {
@@ -44,6 +43,12 @@
             }
         },
         methods: {
+            init() {
+                this.buttonShown = false
+                this.addCardMode = false
+                this.title = ""
+                this.description = ""
+            },
             showAddButton() {
                 this.buttonShown = true
             },
@@ -54,7 +59,6 @@
                 this.addCardMode = !this.addCardMode
             },
             addChildCard() {
-                let url = '/tree/add'
                 let params = {
                     "userId": this.$store.state.account.user.id,
                     "parentId": this.node.id,
@@ -63,15 +67,16 @@
                     "importance": 1,
                     "progress": 0.0
                 }
+
                 console.log(params)
-                treeFetch(url, {body: JSON.stringify(params)})
-                    .then(response =>
-                        (response.text()
-                            .then(text => (text && JSON.parse(text)))
-                            .then(data => this.node.children.push(data))))
-                    .catch(function (error) {
-                        console.log(error);
-                    })
+                const addSuccessCallback = (data) => {
+                    this.node.children.push(data);
+                    this.init()
+                }
+                this.$emit("addChildEmit", [params, addSuccessCallback])
+            },
+            addChildEmit([params, callback]) {
+                this.$emit("addChildEmit", [params, callback])
             },
             removeChildNode() {
                 this.$emit("removeChildNodeEmit", this.node.id)
@@ -79,7 +84,6 @@
             removeChildNodeEmit(nodeId) {
                 // FIX ME : 一つ上の親だけが実行するように...
                 this.node.children = this.node.children.filter((ele) => ele.id !== nodeId)
-                this.$forceUpdate()
                 this.$emit("removeChildNodeEmit", nodeId)
             }
         }
