@@ -1,3 +1,4 @@
+// FIXME コンフィグから取得に変更
 // import config from 'config'
 import { router } from '../router/router'
 
@@ -18,10 +19,8 @@ function login(username, password) {
     return fetch(`http://localhost:8888/api/authenticate`, request)
         .then(handleResponse)
         .then(user => {
-            console.log("fetch login")
             if (user) {
                 localStorage.setItem('user', JSON.stringify(user))
-                console.log("login")
             }
 
             return user
@@ -30,7 +29,6 @@ function login(username, password) {
 
 const actions = {
     login({ dispatch, commit}, { username, password }){
-        console.log("login start")
         commit('loginRequest', { username })
         login(username, password)
             .then(
@@ -39,14 +37,11 @@ const actions = {
                     router.push("/trees", () => {}, () => {})
                 },
                 error => {
-                    console.log(error)
-                    console.log("====")
-                    console.log(dispatch)
+                    // FIXME: ログイン失敗系のメソッド実装
                     commit('loginFailure', error)
                     dispatch('alert/error', error, { root: true})
                 }
             )
-        console.log("login finish")
         }
 }
 

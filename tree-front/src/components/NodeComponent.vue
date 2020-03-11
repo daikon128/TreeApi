@@ -82,7 +82,7 @@
                 this.$emit("removeChildNodeEmit", this.node.id)
             },
             removeChildNodeEmit(nodeId) {
-                // FIX ME : 一つ上の親だけが実行するように...
+                // FIXME : 一つ上の親だけが実行するようにしたいな...
                 this.node.children = this.node.children.filter((ele) => ele.id !== nodeId)
                 this.$emit("removeChildNodeEmit", nodeId)
             }

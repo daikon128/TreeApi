@@ -31,9 +31,9 @@ data class Card(val id: Long, val parentId: Long?, var children: Set<Card>, val 
                             .toSet())
     }
 
-    fun findCard(id: Long) : Boolean {
+    fun existsCard(id: Long) : Boolean {
         return if (this.id == id) true
-               else children.any { c -> c.findCard(id) }
+               else children.any { c -> c.existsCard(id) }
     }
 
     fun copy(): Card {
@@ -47,14 +47,13 @@ class Tree(val id: Long, val root: Card) {
         return Tree(this.id, root.addCard(card))
     }
 
-    fun findCard(id: Long) : Boolean {
-        return root.findCard(id)
+    fun existsCard(id: Long) : Boolean {
+        return root.existsCard(id)
     }
-
 }
 fun constructTree(card: Card, entities: List<Card>) : Card {
     val newCard = entities.filter { e -> e.parentId != null }
             .fold(card) { c1, c2 -> c1.addCard(c2) }
     return if (card == newCard) card
-    else constructTree(newCard, entities)
+           else constructTree(newCard, entities)
 }

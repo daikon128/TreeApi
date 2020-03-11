@@ -54,14 +54,9 @@
         computed: {
             ...mapState('account', ['status'])
         },
-        created () {
-            // reset login status
-            // this.logout();
-        },
         methods: {
             ...mapActions('account', ['login']),
             handleSubmit (e) {
-                console.log(e)
                 this.submitted = true;
                 const { username, password } = this;
                 if (username && password) {
@@ -69,5 +64,5 @@
                 }
             }
         }
-    };
+    }
 </script>
